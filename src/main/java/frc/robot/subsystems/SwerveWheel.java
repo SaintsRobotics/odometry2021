@@ -46,6 +46,10 @@ public class SwerveWheel {
 
     }
 
+    public SwerveModuleState getState(){ //getting the speed/angle of the robot
+
+    }
+
     private double smartInversion(SwerveModuleState targetState) {
         double diff = Math.abs(m_turningEncoder.getRadians() - targetState.angle.getRadians());
         double targetHeading = targetState.angle.getRadians();
