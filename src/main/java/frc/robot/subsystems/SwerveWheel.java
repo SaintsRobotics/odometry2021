@@ -28,6 +28,7 @@ public class SwerveWheel {
     private PIDController m_turningPIDController;
     private AbsoluteEncoder m_turningEncoder;
     private Constants m_constants;
+    private SwerveModuleState m_state;
 
     public SwerveWheel(CANSparkMax driveMotor, CANSparkMax turningMotor, double x, double y, AbsoluteEncoder encoder,
             Constants constants) {
@@ -46,8 +47,8 @@ public class SwerveWheel {
 
     }
 
-    public SwerveModuleState getState(){ //getting the speed/angle of the robot
-
+    public SwerveModuleState getState(){ //getting the speed/angle of the wheel
+        return m_state;
     }
 
     private double smartInversion(SwerveModuleState targetState) {
@@ -70,7 +71,7 @@ public class SwerveWheel {
     }
 
     public void setDesiredState(SwerveModuleState state) {
-
+        m_currentState = state; 
         double driveOutput = smartInversion(state);
         m_driveMotor.set(driveOutput / m_constants.maxMetersPerSecond);
         double pidOutput = m_turningPIDController.calculate(m_turningEncoder.getRadians());
