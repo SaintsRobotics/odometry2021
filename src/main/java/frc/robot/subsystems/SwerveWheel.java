@@ -46,7 +46,7 @@ public class SwerveWheel {
 
     }
 
-    public SwerveModuleState getState() {
+    public SwerveModuleState getState() { // getting the speed/angle of the robot
 
     }
 
