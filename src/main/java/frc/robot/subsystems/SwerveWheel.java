@@ -28,7 +28,7 @@ public class SwerveWheel {
     private PIDController m_turningPIDController;
     private AbsoluteEncoder m_turningEncoder;
     private Constants m_constants;
-    private SwerveModuleState m_state;
+    private SwerveModuleState m_currentState;
 
     public SwerveWheel(CANSparkMax driveMotor, CANSparkMax turningMotor, double x, double y, AbsoluteEncoder encoder,
             Constants constants) {
@@ -47,8 +47,11 @@ public class SwerveWheel {
 
     }
 
+    /** 
+     * Getting the speed/angle of the wheel
+    */
     public SwerveModuleState getState(){ //getting the speed/angle of the wheel
-        return m_state;
+        return m_currentState;
     }
 
     private double smartInversion(SwerveModuleState targetState) {
@@ -70,6 +73,10 @@ public class SwerveWheel {
         return targetState.speedMetersPerSecond;
     }
 
+    /**
+     * Sets the turning motor and driver motor to a value
+     * @param state the current state
+     */
     public void setDesiredState(SwerveModuleState state) {
         m_currentState = state; 
         double driveOutput = smartInversion(state);
