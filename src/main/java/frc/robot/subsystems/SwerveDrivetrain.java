@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -58,7 +59,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     // need pid to save headings/dynamic controls
     private PIDController m_pidController;
-
+    
     /**
      * Creates a new SwerveDrivetrain.
      */
@@ -102,6 +103,8 @@ public class SwerveDrivetrain extends SubsystemBase {
                 m_backRightSwerveWheel.getLocation());
 
         m_gyro = new AHRS();
+
+        m_odometry = new SwerveDriveOdometry(m_kinematics, m_gyro.getAngle());
 
         m_pidController = new PIDController(Math.toRadians((m_constants.maxMetersPerSecond / 180) * 5), 0, 0); // needs
                                                                                                                // import
