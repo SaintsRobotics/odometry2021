@@ -14,11 +14,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -134,7 +132,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         public void periodic() {
                 // This method will be called once per scheduler run
                 double gyroAngle = -m_gyro.getAngle();
-                m_pose = m_odometry.update(gyroAngle, m_frontRightSwerveWheel.getState(),
+                m_pose = m_odometry.update(new Rotation2d(gyroAngle), m_frontRightSwerveWheel.getState(),
                                 m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(),
                                 m_backRightSwerveWheel.getState());
                 // heading correction
