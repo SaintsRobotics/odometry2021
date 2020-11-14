@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -112,7 +113,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
                 m_gyro = new AHRS();
 
-                m_odometry = new SwerveDriveOdometry(m_kinematics, m_gyro.getAngle());
+                m_odometry = new SwerveDriveOdometry(m_kinematics, new Rotation2d(m_gyro.getAngle()));
 
                 m_pidController = new PIDController(Math.toRadians((m_constants.maxMetersPerSecond / 180) * 5), 0, 0); // needs
                                                                                                                        // import
