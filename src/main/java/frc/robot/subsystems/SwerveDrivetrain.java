@@ -136,6 +136,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         double gyroAngle = -m_gyro.getAngle();
         m_pose = m_odometry.update(new Rotation2d(gyroAngle), m_frontRightSwerveWheel.getState(), m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(), m_backRightSwerveWheel.getState());
         SmartDashboard.putNumber("Current X Position", m_odometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber("Current Y Position", m_odometry.getPoseMeters().getTranslation().getY());
         // heading correction   
         // getRate is checking rotation in deg/sec, if <0.05 then no change needed
         if (Utils.deadZones(m_gyro.getRate(), 0.05) != 0) { // checks rotation, always is a value bc vibrate -> need
