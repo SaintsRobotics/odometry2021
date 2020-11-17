@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.AbsoluteEncoder;
 import frc.robot.Constants;
 import frc.robot.Utils;
@@ -127,6 +129,10 @@ public class SwerveDrivetrain extends SubsystemBase {
                 m_ySpeed += m_constants.translationalFriction * m_ySpeed / Math.abs(m_ySpeed);
                 m_rotSpeed = rotSpeed;
                 m_isFieldRelative = isFieldRelative;
+        }
+
+        public Pose2d getLocation() {
+                return m_pose;
         }
 
         @Override
