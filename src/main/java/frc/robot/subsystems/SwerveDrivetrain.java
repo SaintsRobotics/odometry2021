@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.AbsoluteEncoder;
 import frc.robot.Constants;
 import frc.robot.Utils;
@@ -134,7 +136,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         // This method will be called once per scheduler run
         double gyroAngle = -m_gyro.getAngle();
         m_pose = m_odometry.update(new Rotation2d(gyroAngle), m_frontRightSwerveWheel.getState(), m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(), m_backRightSwerveWheel.getState());
-        // heading correction
+        SmartDashboard.putNumber("Current X Position", m_odometry.getPoseMeters().getTranslation().getX());
+        SmartDashboard.putNumber("Current Y Position", m_odometry.getPoseMeters().getTranslation().getY());
+        // heading correction   
         // getRate is checking rotation in deg/sec, if <0.05 then no change needed
         if (Utils.deadZones(m_gyro.getRate(), 0.05) != 0) { // checks rotation, always is a value bc vibrate -> need
                                                             // deadzone to eliminate common vibrations
