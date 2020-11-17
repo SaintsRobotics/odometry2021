@@ -130,7 +130,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         m_isFieldRelative = isFieldRelative;
     }
 
-    public Pose2D getLocation(){
+    public Pose2d getLocation(){
         return m_pose;
     }
 
