@@ -10,6 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 public class MoveToPosition extends CommandBase {
   /**
@@ -60,9 +63,9 @@ public class MoveToPosition extends CommandBase {
   public void execute() {
     m_xSpeed = m_xPID.calculate(m_currentPose.getTranslation().getX(), m_targetPose.getTranslation().getX());
     m_ySpeed = m_xPID.calculate(m_currentPose.getTranslation().getY(), m_targetPose.getTranslation().getY());
-    m_angleSpeed = m_anglePID.calculate(m_currentPose.getRotation().getRadians(), m_targetPose.getRotation.getRadians());
+    m_angleSpeed = m_anglePID.calculate(m_currentPose.getRotation().getRadians(), m_targetPose.getRotation().getRadians());
 
-    m_drivetrain.move(m_xSpeed, m_ySpeed, m_angleSpeed);
+    m_drivetrain.move(m_xSpeed, m_ySpeed, m_angleSpeed, false);
   }
 
   // Called once the command ends or is interrupted.
@@ -74,7 +77,7 @@ public class MoveToPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_currentPose.getTranslation().getX() == m_targetPose.getTranslation().getX() && m_currentPose.getTranslation().getY() == m_targetPose.getTranslation().getY() && )m_currentPose.getRotation().getRadians() == m_targetPose.getRotation.getRadians()){
+    if(m_currentPose.getTranslation().getX() == m_targetPose.getTranslation().getX() && m_currentPose.getTranslation().getY() == m_targetPose.getTranslation().getY() && m_currentPose.getRotation().getRadians() == m_targetPose.getRotation().getRadians()){
       return true;
     }
 
