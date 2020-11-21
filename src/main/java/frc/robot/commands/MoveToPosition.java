@@ -46,9 +46,9 @@ public class MoveToPosition extends CommandBase {
     m_targetPose = new Pose2d(10, 10, new Rotation2d(2));
 
     //input
-    m_xPID.enableContinuousInput(0, Math.PI);
-    m_yPID.enableContinuousInput(0, Math.PI);
-    m_anglePID.enableContinuousInput(0, Math.PI);
+    m_xPID.enableContinuousInput(0, 2*Math.PI);
+    m_yPID.enableContinuousInput(0, 2*Math.PI);
+    m_anglePID.enableContinuousInput(0, 2*Math.PI);
   }
 
   // Called when the command is initially scheduled.
