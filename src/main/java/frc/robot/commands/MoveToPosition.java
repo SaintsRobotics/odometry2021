@@ -27,8 +27,8 @@ public class MoveToPosition extends CommandBase {
   private Pose2d m_targetPose;
 
   private double m_xSpeed;
-  private double m_ySpeed;
   private double m_angleSpeed;
+  private double m_ySpeed;
 
   public MoveToPosition(SwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -38,18 +38,21 @@ public class MoveToPosition extends CommandBase {
     m_xPID.reset();
     m_yPID.reset();
     m_anglePID.reset();
+
     // pids
     m_xPID = new PIDController(.3, 0, 0);
     m_yPID = new PIDController(.3, 0, 0);
     m_anglePID = new PIDController(.3, 0, 0);
+
     // pose
     m_currentPose = m_drivetrain.getLocation();
     m_targetPose = new Pose2d(10, 10, new Rotation2d(2));
 
     // input
-    m_xPID.enableContinuousInput(0, Math.PI);
-    m_yPID.enableContinuousInput(0, Math.PI);
-    m_anglePID.enableContinuousInput(0, Math.PI);
+    m_xPID.enableContinuousInput(0, 2 * Math.PI);
+    m_yPID.enableContinuousInput(0, 2 * Math.PI);
+    m_anglePID.enableContinuousInput(0, 2 * Math.PI);
+
   }
 
   // Called when the command is initially scheduled.
