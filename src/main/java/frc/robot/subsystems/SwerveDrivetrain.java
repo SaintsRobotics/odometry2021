@@ -130,15 +130,15 @@ public class SwerveDrivetrain extends SubsystemBase {
         m_isFieldRelative = isFieldRelative;
     }
 
-    public Pose2D getLocation(){
+    public Pose2d getLocation(){
         return m_pose;
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        double gyroAngle = -m_gyro.getAngle();
-        m_pose = m_odometry.update(new Rotation2d(gyroAngle), m_frontRightSwerveWheel.getState(), m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(), m_backRightSwerveWheel.getState());
+        Rotation2d gyroAngle = new Rotation2d(-m_gyro.getAngle());
+        m_pose = m_odometry.update(gyroAngle, m_frontRightSwerveWheel.getState(), m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(), m_backRightSwerveWheel.getState());
         SmartDashboard.putNumber("Current X Position", m_odometry.getPoseMeters().getTranslation().getX());
         SmartDashboard.putNumber("Current Y Position", m_odometry.getPoseMeters().getTranslation().getY());
         // heading correction   
