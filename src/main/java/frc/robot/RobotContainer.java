@@ -26,6 +26,7 @@ public class RobotContainer {
   Constants constants = new Constants();
   SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(constants);
   SwerveJoystickCommand swerveJoystickCommand = new SwerveJoystickCommand(swerveDrivetrain, constants);
+  private MoveToPosition autonCommand;
 
 
   /**
@@ -54,6 +55,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    autonCommand  = new MoveToPosition(swerveDrivetrain);
+    return autonCommand;
   }
 }

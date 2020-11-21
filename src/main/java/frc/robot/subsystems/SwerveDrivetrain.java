@@ -131,6 +131,10 @@ public class SwerveDrivetrain extends SubsystemBase {
         m_isFieldRelative = isFieldRelative;
     }
 
+    public Pose2D getLocation(){
+        return m_pose;
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
