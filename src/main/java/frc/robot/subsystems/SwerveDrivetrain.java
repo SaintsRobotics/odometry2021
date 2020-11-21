@@ -138,11 +138,12 @@ public class SwerveDrivetrain extends SubsystemBase {
         @Override
         public void periodic() {
                 // This method will be called once per scheduler run
-                double gyroAngle = -m_gyro.getAngle();
-                m_pose = m_odometry.update(new Rotation2d(gyroAngle), m_frontRightSwerveWheel.getState(),
+                Rotation2d gyroAngle = new Rotation2d(-m_gyro.getAngle());
+                m_pose = m_odometry.update(gyroAngle, m_frontRightSwerveWheel.getState(),
                                 m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(),
                                 m_backRightSwerveWheel.getState());
                 SmartDashboard.putNumber("Current X Position", m_odometry.getPoseMeters().getTranslation().getX());
+                SmartDashboard.putNumber("Current Y Position", m_odometry.getPoseMeters().getTranslation().getY());
                 // heading correction
                 // getRate is checking rotation in deg/sec, if <0.05 then no change needed
                 if (Utils.deadZones(m_gyro.getRate(), 0.05) != 0) { // checks rotation, always is a value bc vibrate ->
@@ -191,35 +192,6 @@ public class SwerveDrivetrain extends SubsystemBase {
                                                                           // rotation
                                                                           // speed
                         // if value less than tolerance (1/36), then calculate is just 0 (no rotate)
-
                 }
-
-                SwerveModuleState[] swerveModuleStates;
-                if (m_isFieldRelative) { // chassisspeeds for first conditional is from wpilib, doesnt need instantiated
-                        swerveModuleStates = m_kinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(
-                                        m_xSpeed, m_ySpeed, m_rotSpeed,
-                                        new Rotation2d(((Math.toRadians(m_gyro.getAngle()) % (Math.PI * 2))
-                                                        + (Math.PI * 2)) % (Math.PI * 2)))); // instead
-                                                                                             // of
-                                                                                             // new
-                                                                                             // chassisspeeds,
-                                                                                             // use
-                                                                                             // method
-                                                                                             // from
-                                                                                             // chassisspeeds
-                                                                                             // to
-                                                                                             // field
-                                                                                             // relative
-                } else {
-                        swerveModuleStates = m_kinematics
-                                        .toSwerveModuleStates(new ChassisSpeeds(m_xSpeed, m_ySpeed, m_rotSpeed));
-                }
-                m_kinematics.normalizeWheelSpeeds(swerveModuleStates, m_constants.maxMetersPerSecond);
-
-                m_frontLeftSwerveWheel.setDesiredState(swerveModuleStates[0]);
-                m_frontRightSwerveWheel.setDesiredState(swerveModuleStates[1]);
-                m_backLeftSwerveWheel.setDesiredState(swerveModuleStates[2]);
-                m_backRightSwerveWheel.setDesiredState(swerveModuleStates[3]);
-
         }
 }
