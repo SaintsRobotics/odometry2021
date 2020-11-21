@@ -131,69 +131,6 @@ public class SwerveDrivetrain extends SubsystemBase {
                 m_isFieldRelative = isFieldRelative;
         }
 
-        public Pose2D getLocation() {
-                return m_pose;
-        }
-
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-        double gyroAngle = -m_gyro.getAngle();
-        m_pose = m_odometry.update(new Rotation2d(gyroAngle), m_frontRightSwerveWheel.getState(), m_frontLeftSwerveWheel.getState(), m_backLeftSwerveWheel.getState(), m_backRightSwerveWheel.getState());
-        SmartDashboard.putNumber("Current X Position", m_odometry.getPoseMeters().getTranslation().getX());
-        SmartDashboard.putNumber("Current Y Position", m_odometry.getPoseMeters().getTranslation().getY());
-        // heading correction   
-        // getRate is checking rotation in deg/sec, if <0.05 then no change needed
-        if (Utils.deadZones(m_gyro.getRate(), 0.05) != 0) { // checks rotation, always is a value bc vibrate -> need
-                                                            // deadzone to eliminate common vibrations
-            m_isTurning = true;
-        } else if (m_isTurning = true && Utils.deadZones(m_gyro.getRate(), 0.05) == 0) { // if deadzone/getRate is 0, so
-                                                                                         // not
-                                                                                         // turning, but m_isTurning is
-                                                                                         // true
-                                                                                         // (we were just turning), then
-                                                                                         // want to do smth
-            m_isTurning = false;
-            m_pidController
-                    .setSetpoint(Math.toRadians(m_gyro.getAngle()) % (Math.PI * 2) + (Math.PI * 2) % (Math.PI * 2)); // store
-                                                                                                                     // heading,
-                                                                                                                     // keep
-                                                                                                                     // degrees
-                                                                                                                     // for
-                                                                                                                     // now
-            m_rotSpeed = m_pidController
-                    .calculate(Math.toRadians(m_gyro.getAngle()) % (Math.PI * 2) + (Math.PI * 2) % (Math.PI * 2)); // gets
-                                                                                                                   // the
-                                                                                                                   // error
-                                                                                                                   // to
-                                                                                                                   // correct
-                                                                                                                   // heading
-                                                                                                                   // times
-                                                                                                                   // kp,
-                                                                                                                   // using
-                                                                                                                   // gyro
-                                                                                                                   // angle
-        } else if (m_xSpeed != 0 || m_ySpeed != 0) { // if moving at all, assume drift, but if rotating, then first
-                                                     // conditional just sets isTurning as true, no heading correction
-            m_rotSpeed = m_pidController
-                    .calculate(Math.toRadians(m_gyro.getAngle()) % (Math.PI * 2) + (Math.PI * 2) % (Math.PI * 2)); // if
-                                                                                                                   // off,
-                                                                                                                   // gives
-                                                                                                                   // correction
-                                                                                                                   // as
-                                                                                                                   // rotation
-                                                                                                                   // speed
-            // if value less than tolerance (1/36), then calculate is just 0 (no rotate)
-
-        public void move(double xSpeed, double ySpeed, double rotSpeed, boolean isFieldRelative) {
-                m_xSpeed = xSpeed;
-                m_xSpeed += m_constants.translationalFriction * m_xSpeed / Math.abs(m_xSpeed);
-                m_ySpeed = ySpeed;
-                m_ySpeed += m_constants.translationalFriction * m_ySpeed / Math.abs(m_ySpeed);
-                m_rotSpeed = rotSpeed;
-                m_isFieldRelative = isFieldRelative;
-        }
-
         public Pose2d getLocation() {
                 return m_pose;
         }

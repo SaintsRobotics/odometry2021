@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import frc.robot.subsystems.*;
 
 public class MoveToPosition extends CommandBase {
@@ -17,7 +18,8 @@ public class MoveToPosition extends CommandBase {
    */
   private SwerveDrivetrain m_drivetrain;
   private PIDController m_controller;
-  private Pose2D m_currentPose;
+  private Pose2d m_currentPose;
+  private PIDController x_PIDcontroller;
 
   public MoveToPosition(SwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
