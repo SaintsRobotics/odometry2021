@@ -28,7 +28,6 @@ public class RobotContainer {
   Constants constants = new Constants();
   SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(constants);
   SwerveJoystickCommand swerveJoystickCommand = new SwerveJoystickCommand(swerveDrivetrain, constants);
-  MoveToPosition moveCommand = new MoveToPosition(swerveDrivetrain);
   private MoveToPosition autonCommand;
 
   /**

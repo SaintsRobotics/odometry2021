@@ -7,11 +7,8 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.hal.util.HalHandleException;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SwerveDrivetrain;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.subsystems.*;
 
 public class MoveToPosition extends CommandBase {
@@ -20,22 +17,21 @@ public class MoveToPosition extends CommandBase {
    */
   private SwerveDrivetrain m_drivetrain;
   private PIDController m_controller;
-  private Pose2d m_currentPose;
+  private Pose2D m_currentPose;
 
   public MoveToPosition(SwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = drivetrain;
     addRequirements(m_drivetrain);
-    m_controller = new PIDController(.3, 0, 0);
-    m_currentPose = drivetrain.getLocation();
-
+    x_PIDcontroller = new PIDController(.3, 0, 0);
+    m_currentPose = m_drivetrain.getLocation();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    m_drivetrain.move(x, y, a, false);
+    // m_drivetrain.move(x, y, a, false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
