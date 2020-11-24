@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -26,8 +27,8 @@ public class MoveToPosition extends CommandBase {
   private Pose2d m_targetPose;
 
   private double m_xSpeed;
-  private double m_ySpeed;
   private double m_angleSpeed;
+  private double m_ySpeed;
 
   public MoveToPosition(SwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,25 +38,28 @@ public class MoveToPosition extends CommandBase {
     m_xPID.reset();
     m_yPID.reset();
     m_anglePID.reset();
-    //pids
+
+    // pids
     m_xPID = new PIDController(.3, 0, 0);
     m_yPID = new PIDController(.3, 0, 0);
     m_anglePID = new PIDController(.3, 0, 0);
-    //pose
+
+    // pose
     m_currentPose = m_drivetrain.getLocation();
     m_targetPose = new Pose2d(10, 10, new Rotation2d(2));
 
-    //input
-    m_xPID.enableContinuousInput(0, Math.PI);
-    m_yPID.enableContinuousInput(0, Math.PI);
-    m_anglePID.enableContinuousInput(0, Math.PI);
+    // input
+    m_xPID.enableContinuousInput(0, 2 * Math.PI);
+    m_yPID.enableContinuousInput(0, 2 * Math.PI);
+    m_anglePID.enableContinuousInput(0, 2 * Math.PI);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    //m_drivetrain.move(x, y, a, false);
+    // m_drivetrain.move(x, y, a, false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -63,7 +67,8 @@ public class MoveToPosition extends CommandBase {
   public void execute() {
     m_xSpeed = m_xPID.calculate(m_currentPose.getTranslation().getX(), m_targetPose.getTranslation().getX());
     m_ySpeed = m_xPID.calculate(m_currentPose.getTranslation().getY(), m_targetPose.getTranslation().getY());
-    m_angleSpeed = m_anglePID.calculate(m_currentPose.getRotation().getRadians(), m_targetPose.getRotation().getRadians());
+    m_angleSpeed = m_anglePID.calculate(m_currentPose.getRotation().getRadians(),
+        m_targetPose.getRotation().getRadians());
 
     m_drivetrain.move(m_xSpeed, m_ySpeed, m_angleSpeed, false);
   }
@@ -77,7 +82,9 @@ public class MoveToPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_currentPose.getTranslation().getX() == m_targetPose.getTranslation().getX() && m_currentPose.getTranslation().getY() == m_targetPose.getTranslation().getY() && m_currentPose.getRotation().getRadians() == m_targetPose.getRotation().getRadians()){
+    if (m_currentPose.getTranslation().getX() == m_targetPose.getTranslation().getX()
+        && m_currentPose.getTranslation().getY() == m_targetPose.getTranslation().getY()
+        && m_currentPose.getRotation().getRadians() == m_targetPose.getRotation().getRadians()) {
       return true;
     }
 
